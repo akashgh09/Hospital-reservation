@@ -16,8 +16,8 @@ use App\Http\Controllers\ProjectController;
 */
 
 Route::get('/', [ProjectController::class, 'getAllDepartments']);
-Route::post('/showAppoinments', [ProjectController::class, 'showAppoinments'])->name('showAppoinments');
-
+Route::post('/showAppoinments', [ProjectController::class, 'showAppoinments'])->name('showAppoinments')->middleware('auth') ;
+Route::post('/bookAppoinment',[ProjectController::class,'bookAppoinment'])->name('bookAppoinment')->middleware('auth');
 
 
 Route::middleware([
@@ -29,3 +29,4 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
