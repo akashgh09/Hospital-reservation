@@ -20,7 +20,7 @@ class ProjectController extends Controller
     {
        $department_id= $request->input('department_id');
        $appoinments= Appoinment::where('department_id',$department_id)->get();
-       return \view('appoinments',['appoinments'=>$appoinments]);
+       return view('appoinments',['appoinments'=>$appoinments]);
     }
     
     public function getView()
@@ -28,11 +28,11 @@ class ProjectController extends Controller
         return view('welcome');
     }
     public function bookAppoinment(Request $requenst){
-        $appoinment_id=$requenst->input('appointment_id');
+        $appoinment_id=$requenst->input('appoinment_id');
         $department_name=$requenst->input('department_name');
-        $appoinment_date=$requenst->input('appointment_date');
-        $exists= Booking::where('appoinment_id',$appoinment_id)->exists();
-        if(exists)
+        $appoinment_date=$requenst->input('appoinment_date');
+        $exists= Booking::where('appoinment_id','=',$appoinment_id)->exists();
+        if($exists)
         {
               Session::flash('message','Appointment was already taken');
               Session::flash('alert-class','alert-danger');
@@ -40,16 +40,16 @@ class ProjectController extends Controller
         }
         else
         {
-                 $booking= new Booking;
+                 $booking = new Booking;
                  $booking->appoinment_id=$appoinment_id;
                  $booking->department_name=$department_name;
                  $booking->appoinment_date=$appoinment_date;
                  $booking->username=Auth::user()->name;
                  $booking->user_id=Auth::user()->id;
-                 booking->save();
+                 $booking->save();
 
                  Session::flash('message','Appointment was booked successfully');
-                 Session::flash('alert-class','alert-danger');
+                 Session::flash('alert-class','alert-sucess');
                  return redirect('/');
 
         }
