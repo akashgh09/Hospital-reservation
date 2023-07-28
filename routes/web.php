@@ -15,11 +15,11 @@ use App\Http\Controllers\ProjectController;
 |
 */
 
-Route::get('/', [ProjectController::class, 'getAllDepartments']);
+Route::get('/', [ProjectController::class, 'getAllDepartments'])->name('home');
 Route::post('/showAppoinments', [ProjectController::class, 'showAppoinments'])->name('showAppoinments')->middleware('auth') ;
 Route::post('/bookAppoinment',[ProjectController::class,'bookAppoinment'])->name('bookAppoinment')->middleware('auth');
-
-
+Route::get('/myBooking',[ProjectController::class,'myBooking'])->name('myBooking')->middleware('auth');
+Route::post('/cancelAppoinment',[ProjectController::class,'cancelAppoinment'])->name('cancelAppoinment')->middleware('auth');
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
